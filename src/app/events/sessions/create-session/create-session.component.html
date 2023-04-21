@@ -1,0 +1,55 @@
+<div class="col-md-12">
+    <h3>Create sessions</h3>
+</div>
+<div class="col-md-6">
+    <form autocomplete="off" novalidate [formGroup]="sessionForm" (ngSubmit)="saveSession()"> 
+        <div class="form-group" [ngClass]="{error: !validateField('name')}">
+            <label for="name">Session Name:</label>
+            <em *ngIf="!validateField('name')">Required</em>
+            <input type="text" id="name" class="form-control" placeholder="Session name.." formControlName="name" />
+        </div>
+
+        <div class="form-group" [ngClass]="{error: !validateField('presenter')}">
+            <label for="presenter">Session presenter:</label>
+            <em *ngIf="!validateField('presenter')">Required</em>
+            <input type="text" id="presenter" class="form-control" placeholder="Session presenter.." formControlName="presenter" />
+        </div>
+
+        <div class="form-group" [ngClass]="{error: !validateField('duration')}">
+            <label for="duration">Session duration:</label>
+            <em *ngIf="!validateField('duration')">Required</em>
+
+            <select class="form-control" formControlName="duration" >
+                <option value="">select duration...</option>
+                <option value="1">Half hour</option>
+                <option value="2">1 hour</option>
+                <option value="3">Half day</option>
+                <option value="4">Full day</option>
+            </select>
+        </div>
+
+        <div class="form-group" [ngClass]="{error: !validateField('level')}">
+            <label for="level">Session level:</label>
+            <em *ngIf="!validateField('level')">Required</em>
+            <select class="form-control" formControlName="level" >
+                <option value="">select level...</option>
+                <option value="1">Beginner</option>
+                <option value="2">Intermediate</option>
+                <option value="3">Advanced</option>
+            </select>
+        </div>
+
+        <div class="form-group" [ngClass]="{error: !validateField('abstract')}">
+            <label for="abstract">Session abstract:</label>
+            <em *ngIf="!validateField('abstract') && sessionForm.get('abstract')?.errors?.['required']">Required</em>
+            <em *ngIf="!validateField('abstract')&& sessionForm.get('abstract')?.errors?.['maxLength']">>Maximim length 400</em>
+            <em *ngIf="!validateField('abstract') && sessionForm.get('abstract')?.errors?.['restrictedWords']">Restricted words : {{sessionForm.get('abstract')?.errors?.['restrictedWords']}}</em>
+            <textarea cols="5"  id="abstract" class="form-control" placeholder="Session abstract.." formControlName="abstract"></textarea>
+        </div>
+
+        <br />
+        <br />
+        <button type="submit" class="btn btn-primary">Save</button>
+        <button type="button" class="btn btn-default" (click)="cancel()">Cancel</button>
+    </form>
+</div>
